@@ -1,9 +1,9 @@
-package spring.service.skeleton.app.config;
+package health.data.java.app.config;
 
+import health.data.java.app.util.InterceptorUtilsLogging;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import spring.service.skeleton.app.util.InterceptorUtilsLogging;
 
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
