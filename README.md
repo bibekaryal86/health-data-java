@@ -1,45 +1,40 @@
-# spring-service-skeleton
+# health-data-java
 
-* This is a template Repository to create a new Spring Boot REST Service
-* Things to update:
-    * Refactor the package name from `spring.service.skeleton.app` to as desired
-        * keep it 3 words if possible, eg: `xxx.xxx.xxx.app`
-    * `settings.gradle`
-        * `rootProject.name`
-    * `build.gradle`
-        * Add/Remove dependencies as necessary
-        * `springVersion`, and version in buildscript and plugin as necessary
-        * `archiveFileName` in `bootJar`
-        * `mainClass` in `application`
-    * gradle wrapper version as necessary
-    * `application.yml` as necessary
-        * at least need to replace `spring-service-skeleton` with application name
-    * `logback.xml` as necessary
-        * avoid LOG_FILE as much as possible, prefer console logging
-        * replace `spring-service-skeleton` with application name in `LOG_PATTERN` and `LOG_FILE`
-        * remove `traceId` and `spanId` if `spring-cloud-started-sleuth` is not used in `build.gradle`
-    * `Dockerfile` as necessary
-        * esp `JAR_FILE`, `COPY` and environment variables in `ENTRYPOINT`
-    * GCP configurations, in `gcp` folder as necessary
-        * esp `app-credentials.yaml` and `app-credentials_DUMMY.yaml`
-    * `README.md` i.e. this file to add the program's readme
-    * `.gitignore` if necessary
- * Things to add:
-     * `DatasourceConfig` if using MONGO/JPA/JDBC
-         * See: `pets-database-layer` for MongoDB example
-             * https://github.com/bibekaryal86/pets-database-layer
-         * See: `health-data-java` for JPA example
-             * https://github.com/bibekaryal86/health-data-java
-         * For JDBC, only need to set `Datasource` from above examples
-     * `RestTemplateConfig` if using `RestTemplate`
-         * See: `pets-service-layer` for example
-             * https://github.com/bibekaryal86/pets-service-layer
-     * `SwaggerConfig` if using SwaggerUI
-         * See: `pets-service-layer` / `pets-database-layer` for example
-             * https://github.com/bibekaryal86/pets-service-layer
-             * https://github.com/bibekaryal86/pets-database-layer
-         * Also, will have to update `SecurityConfig` to allow SwaggerUI
- * Things to remove:
-     * If not using cache
-         * Remove `CacheConfig` from config package
-         * Remove `spring-boot-starter-cache` dependency from `build.gradle`
+This is a simple app which provides the logic for database CRUD actions. The idea for the app came around to store the
+health related data, specially the regular tests and checkups (and other tests) at a centralized repository. Over the
+years, such data have been scattered in various web portals of different service providers, so this app will act as a
+centralized database if there is a need to look up the history of test results.
+
+This app forms the service layer to provide the CRUD functionality, and the endpoints will be used by a front-end
+application to view or manipulate data.
+
+Obviously, and unfortunately, the data need to be manually entered to the system.
+
+This app is a scaled up version of `health-data-java-simple` app found
+here: https://github.com/bibekaryal86/health-data-java. The two apps do the same thing, but are different in how they
+are implemented.
+
+This app uses Spring Boot with JPA framework to do the exact same function as `health-data-java-simple`. However, the
+other `simple` app does not use any kind of Java or JDBC frameworks.
+
+Because of absence of any frameworks, the footprint of that app is very grounded (~4 MB jar archive and ~100 MB runtime
+JVM memory) as opposed to when using Spring Boot (~45 MB archive and ~350 MB memory). And, as a result, that app can be
+deployed and continuously run 24/7 on Google Cloud Platform App Engine's free tier.
+
+To run the app, we need to supply the following environment variables:
+
+* Port
+    * This is optional, and if it is not provided port defaults to 8080
+* IBM DB2 Cloud Database Details for REST API
+    * DB2_USR: database username
+    * DB2_PWD: database password
+    * DB2_HST: db2 cloud host
+    * DB2_DEP: db2 database port
+* Authentication header for simple app security
+    * BASIC_AUTH_USR: some username
+    * BASIC_AUTH_PWD: some password
+
+This app is not deployed to GCP or other cloud providers because of the high RAM/CPU requirements that are not available
+in the free tier. However, the `health-data-java-simple` app, with exact same functionality, has been deployed to GCP:
+
+* https://healthdatajava.appspot.com/health-data/tests/ping

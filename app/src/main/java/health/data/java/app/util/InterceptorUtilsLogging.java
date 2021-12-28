@@ -1,4 +1,4 @@
-package spring.service.skeleton.app.util;
+package health.data.java.app.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
