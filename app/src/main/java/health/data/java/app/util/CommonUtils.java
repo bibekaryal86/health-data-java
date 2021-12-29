@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -19,12 +20,12 @@ public class CommonUtils {
                 envProperty;
     }
 
-    public static boolean isValidRequestId(String id) {
+    public static boolean isValidNumber(String id) {
         boolean isValid = false;
 
         if (StringUtils.hasText(id))
             try {
-                Integer.parseInt(id);
+                new BigDecimal(id);
                 isValid = true;
             } catch (NumberFormatException ignored) { /* ignored */ }
 
@@ -43,6 +44,6 @@ public class CommonUtils {
     }
 
     public static Integer getIntegerId(String id) {
-        return isValidRequestId(id) ? Integer.parseInt(id) : null;
+        return isValidNumber(id) ? Integer.parseInt(id) : null;
     }
 }

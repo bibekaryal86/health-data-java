@@ -8,6 +8,8 @@ import health.data.java.app.model.CheckupResultResponse;
 import health.data.java.app.model.dto.CheckupResultDto;
 import health.data.java.app.repository.CheckupResultRepository;
 import health.data.java.app.util.CommonUtils;
+
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -104,13 +106,12 @@ public class CheckupResultService {
                 !StringUtils.hasText(checkupResultRequest.getCheckupResult().getUsername()) ||
                 !StringUtils.hasText(checkupResultRequest.getCheckupResult().getCheckupDate()) ||
                 !StringUtils.hasText(checkupResultRequest.getCheckupResult().getTestResult()) ||
-                !StringUtils.hasText(checkupResultRequest.getCheckupResult().getResultFlag()) ||
                 !StringUtils.hasText(checkupResultRequest.getCheckupResult().getCheckupComponent().getId()) ||
                 !CommonUtils.isValidDate(checkupResultRequest.getCheckupResult().getCheckupDate())) {
             return false;
         }
 
-        return isInsert || CommonUtils.isValidRequestId(checkupResultRequest.getId());
+        return isInsert || CommonUtils.isValidNumber(checkupResultRequest.getId());
     }
 
     private CheckupResult convertDtoToObject(CheckupResultDto checkupResultDto, List<CheckupComponent> checkupComponentList) {
@@ -118,7 +119,8 @@ public class CheckupResultService {
                 .id(checkupResultDto.getId().toString())
                 .checkupDate(checkupResultDto.getCheckupDate())
                 .testResult(checkupResultDto.getTestResult())
-                .resultFlag(checkupResultDto.getResultFlag())
+                .resultFlag(checkupResultFlag(checkupResultDto.getComponentId().toString(),
+                        checkupResultDto.getTestResult(), checkupComponentList))
                 .checkupComponent(checkupComponentList.stream()
                         .filter(checkupComponent -> checkupComponent.getId().equals(checkupResultDto.getComponentId().toString()))
                         .findFirst()
@@ -136,8 +138,31 @@ public class CheckupResultService {
                 .componentId(CommonUtils.getIntegerId(checkupResult.getCheckupComponent().getId()))
                 .checkupDate(checkupResult.getCheckupDate())
                 .testResult(checkupResult.getTestResult())
-                .resultFlag(checkupResult.getResultFlag())
                 .username(checkupResult.getUsername())
                 .build();
+    }
+
+    private String checkupResultFlag(String componentId, String testResult, List<CheckupComponent> checkupComponents) {
+        if (CommonUtils.isValidNumber(componentId) && CommonUtils.isValidNumber(testResult)) {
+            CheckupComponent checkupComponent = checkupComponents.stream()
+                    .filter(cc -> cc.getId().equals(componentId))
+                    .findFirst()
+                    .orElse(null);
+
+            if (checkupComponent != null && StringUtils.hasText(checkupComponent.getMeasureUnit())) {
+                BigDecimal testResultBd = new BigDecimal(testResult);
+
+                if (testResultBd.compareTo(checkupComponent.getStandardLow()) <= 0) {
+                    return "L";
+                }
+
+                if ((testResultBd.compareTo(checkupComponent.getStandardHigh()) >= 0) &&
+                        !ConstantUtils.RESULT_FLAG_INVERSE_LIST.contains(checkupComponent.getComponentName())) {
+                    return "H";
+                }
+            }
+        }
+
+        return "";
     }
 }

@@ -19,6 +19,9 @@ public class CheckupResultDto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "username", nullable = false)
+    private String username;
+
     @Column(name = "component_id", nullable = false)
     private Integer componentId;
 
@@ -27,10 +30,4 @@ public class CheckupResultDto implements Serializable {
 
     @Column(name = "test_result", nullable = false)
     private String testResult;
-
-    @Column(name = "result_flag", nullable = false)
-    private String resultFlag;
-
-    @Column(name = "username", nullable = false)
-    private String username;
 }

@@ -57,7 +57,7 @@ public class CheckupComponentController {
 
     @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CheckupComponentResponse> delete(@RequestParam String id) {
-        if (CommonUtils.isValidRequestId(id)) {
+        if (CommonUtils.isValidNumber(id)) {
             ResponseEntity<CheckupComponentResponse> responseEntity = response(checkupComponentService.deleteCheckupComponent(
                     Integer.parseInt(id)));
             CompletableFuture.supplyAsync(checkupComponentService::findCheckupComponents);
