@@ -119,15 +119,11 @@ public class CheckupComponentService {
                 .componentName(checkupComponentDto.getComponentName())
                 .componentStandard(checkupComponentDto.getComponentStandard())
                 .componentComments(checkupComponentDto.getComponentComments())
-                .checkupCategory(CheckupCategory.builder()
-                        .id(checkupComponentDto.getCategoryId().toString())
-                        .categoryName(checkupCategoryList.stream()
-                                .filter(checkupCategory -> checkupCategory.getId().equals(checkupComponentDto.getCategoryId().toString()))
-                                .findFirst()
-                                .orElse(CheckupCategory.builder()
-                                        .build())
-                                .getCategoryName())
-                        .build())
+                .checkupCategory(checkupCategoryList.stream()
+                        .filter(checkupCategory -> checkupCategory.getId().equals(checkupComponentDto.getCategoryId().toString()))
+                        .findFirst()
+                        .orElse(CheckupCategory.builder()
+                                .build()))
                 .build();
     }
 

@@ -114,26 +114,18 @@ public class CheckupResultService {
     }
 
     private CheckupResult convertDtoToObject(CheckupResultDto checkupResultDto, List<CheckupComponent> checkupComponentList) {
-        CheckupComponent checkupComponent = checkupComponentList.stream()
-                .filter(checkupComponent1 -> checkupComponent1.getId().equals(checkupResultDto.getComponentId().toString()))
-                .findFirst()
-                .orElse(CheckupComponent.builder()
-                        .checkupCategory(CheckupCategory.builder()
-                                .build())
-                        .build());
-
         return CheckupResult.builder()
                 .id(checkupResultDto.getId().toString())
                 .checkupDate(checkupResultDto.getCheckupDate())
                 .testResult(checkupResultDto.getTestResult())
                 .resultFlag(checkupResultDto.getResultFlag())
-                .checkupComponent(CheckupComponent.builder()
-                        .id(checkupResultDto.getComponentId().toString())
-                        .componentName(checkupComponent.getComponentName())
-                        .componentStandard(checkupComponent.getComponentStandard())
-                        .componentComments(checkupComponent.getComponentComments())
-                        .checkupCategory(checkupComponent.getCheckupCategory())
-                        .build())
+                .checkupComponent(checkupComponentList.stream()
+                        .filter(checkupComponent -> checkupComponent.getId().equals(checkupResultDto.getComponentId().toString()))
+                        .findFirst()
+                        .orElse(CheckupComponent.builder()
+                                .checkupCategory(CheckupCategory.builder()
+                                        .build())
+                                .build()))
                 .username(checkupResultDto.getUsername())
                 .build();
     }
