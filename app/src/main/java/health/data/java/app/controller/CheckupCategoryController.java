@@ -57,7 +57,7 @@ public class CheckupCategoryController {
 
     @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CheckupCategoryResponse> delete(@RequestParam String id) {
-        if (CommonUtils.isValidRequestId(id)) {
+        if (CommonUtils.isValidNumber(id)) {
             ResponseEntity<CheckupCategoryResponse> responseEntity = response(checkupCategoryService.deleteCheckupCategory(
                     Integer.parseInt(id)));
             CompletableFuture.supplyAsync(checkupCategoryService::findCheckupCategories);

@@ -102,7 +102,7 @@ public class CheckupCategoryService {
             return false;
         }
 
-        return isInsert || CommonUtils.isValidRequestId(checkupCategoryRequest.getId());
+        return isInsert || CommonUtils.isValidNumber(checkupCategoryRequest.getId());
     }
 
     private CheckupCategory convertDtoToObject(CheckupCategoryDto checkupCategoryDto) {

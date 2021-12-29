@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @Builder
@@ -25,8 +26,14 @@ public class CheckupComponentDto implements Serializable {
     @Column(name = "component_name", nullable = false)
     private String componentName;
 
-    @Column(name = "component_standard", nullable = false)
-    private String componentStandard;
+    @Column(name = "standard_low")
+    private BigDecimal standardLow;
+
+    @Column(name = "standard_high")
+    private BigDecimal standardHigh;
+
+    @Column(name = "measure_unit")
+    private String measureUnit;
 
     @Column(name = "component_comments")
     private String componentComments;

@@ -54,7 +54,7 @@ public class CheckupResultController {
 
     @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CheckupResultResponse> delete(@RequestParam String id) {
-        if (CommonUtils.isValidRequestId(id)) {
+        if (CommonUtils.isValidNumber(id)) {
             return response(checkupResultService.deleteCheckupResult(Integer.parseInt(id)));
         }
 

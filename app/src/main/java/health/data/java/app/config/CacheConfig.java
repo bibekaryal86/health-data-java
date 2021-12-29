@@ -29,7 +29,8 @@ public class CacheConfig {
         this.checkupCategoryService = checkupCategoryService;
         this.checkupComponentService = checkupComponentService;
     }
-    @Scheduled(cron = "0 0 0 * * *")
+
+    @Scheduled(cron = "0 7 0 * * *")
     protected void putAllCache() {
         log.info("Firing Cache Evict!!!");
         cacheManager.getCacheNames().forEach(cacheName -> Objects.requireNonNull(cacheManager.getCache(cacheName)).clear());

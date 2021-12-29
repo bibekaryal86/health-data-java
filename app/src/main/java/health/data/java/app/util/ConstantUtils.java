@@ -3,6 +3,8 @@ package health.data.java.app.util;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConstantUtils {
 
@@ -21,4 +23,9 @@ public class ConstantUtils {
     public static final String ERR_MSG_SAVE = "Error Saving Object to Database! Please Try Again!!!";
     public static final String ERR_MSG_DELETE = "Error Deleting Object from Database! Please Try Again!!!";
     public static final String ERR_MSG_MISSING = "Error! Required Input Missing or Invalid!! Please Try Again!!!";
+
+    public static final List<String> RESULT_FLAG_INVERSE_LIST = List.of(
+            "HDL CHOLESTEROL",
+            "EGFR NOT AFRICAN",
+            "EGFR AFRICAN");
 }

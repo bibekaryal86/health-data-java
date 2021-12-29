@@ -105,29 +105,42 @@ public class CheckupComponentService {
                 checkupComponentRequest.getCheckupComponent() == null
                 || checkupComponentRequest.getCheckupComponent().getCheckupCategory() == null ||
                 !StringUtils.hasText(checkupComponentRequest.getCheckupComponent().getComponentName()) ||
-                !StringUtils.hasText(checkupComponentRequest.getCheckupComponent().getComponentStandard()) ||
-                !StringUtils.hasText(checkupComponentRequest.getCheckupComponent().getCheckupCategory().getId())) {
+                !CommonUtils.isValidNumber(checkupComponentRequest.getCheckupComponent().getCheckupCategory().getId())) {
             return false;
         }
 
-        return isInsert || CommonUtils.isValidRequestId(checkupComponentRequest.getId());
+        if (
+                (checkupComponentRequest.getCheckupComponent().getStandardLow() != null &&
+                        (checkupComponentRequest.getCheckupComponent().getStandardHigh() == null ||
+                                !StringUtils.hasText(checkupComponentRequest.getCheckupComponent().getMeasureUnit()))) ||
+                (checkupComponentRequest.getCheckupComponent().getStandardHigh() != null &&
+                        (checkupComponentRequest.getCheckupComponent().getStandardLow() == null ||
+                                !StringUtils.hasText(checkupComponentRequest.getCheckupComponent().getMeasureUnit()))) ||
+                (StringUtils.hasText(checkupComponentRequest.getCheckupComponent().getMeasureUnit()) &&
+                        (checkupComponentRequest.getCheckupComponent().getStandardLow() == null ||
+                                checkupComponentRequest.getCheckupComponent().getStandardHigh() == null))
+
+        ) {
+            log.info("Checkup Component Invalid with Standards and Measure Unit: {}", checkupComponentRequest);
+            return false;
+        }
+
+        return isInsert || CommonUtils.isValidNumber(checkupComponentRequest.getId());
     }
 
     private CheckupComponent convertDtoToObject(CheckupComponentDto checkupComponentDto, List<CheckupCategory> checkupCategoryList) {
         return CheckupComponent.builder()
                 .id(checkupComponentDto.getId().toString())
                 .componentName(checkupComponentDto.getComponentName())
-                .componentStandard(checkupComponentDto.getComponentStandard())
+                .standardLow(checkupComponentDto.getStandardLow())
+                .standardHigh(checkupComponentDto.getStandardHigh())
+                .measureUnit(checkupComponentDto.getMeasureUnit())
                 .componentComments(checkupComponentDto.getComponentComments())
-                .checkupCategory(CheckupCategory.builder()
-                        .id(checkupComponentDto.getCategoryId().toString())
-                        .categoryName(checkupCategoryList.stream()
-                                .filter(checkupCategory -> checkupCategory.getId().equals(checkupComponentDto.getCategoryId().toString()))
-                                .findFirst()
-                                .orElse(CheckupCategory.builder()
-                                        .build())
-                                .getCategoryName())
-                        .build())
+                .checkupCategory(checkupCategoryList.stream()
+                        .filter(checkupCategory -> checkupCategory.getId().equals(checkupComponentDto.getCategoryId().toString()))
+                        .findFirst()
+                        .orElse(CheckupCategory.builder()
+                                .build()))
                 .build();
     }
 
@@ -136,7 +149,9 @@ public class CheckupComponentService {
                 .id(CommonUtils.getIntegerId(checkupComponent.getId()))
                 .categoryId(CommonUtils.getIntegerId(checkupComponent.getCheckupCategory().getId()))
                 .componentName(checkupComponent.getComponentName())
-                .componentStandard(checkupComponent.getComponentStandard())
+                .standardLow(checkupComponent.getStandardLow())
+                .standardHigh(checkupComponent.getStandardHigh())
+                .measureUnit(checkupComponent.getMeasureUnit())
                 .componentComments(checkupComponent.getComponentComments())
                 .build();
     }
