@@ -11,7 +11,7 @@ application to view or manipulate data.
 Obviously, and unfortunately, the data need to be manually entered to the system.
 
 This app is a scaled up version of `health-data-java-simple` app found
-here: https://github.com/bibekaryal86/health-data-java. The two apps do the same thing, but are different in how they
+here: https://github.com/bibekaryal86/health-data-java-simple. The two apps do the same thing, but are different in how they
 are implemented.
 
 This app uses Spring Boot with JPA framework to do the exact same function as `health-data-java-simple`. However, the
