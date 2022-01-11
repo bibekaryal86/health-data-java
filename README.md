@@ -21,6 +21,11 @@ Because of absence of any frameworks, the footprint of that app is very grounded
 JVM memory) as opposed to when using Spring Boot (~45 MB archive and ~350 MB memory). And, as a result, that app can be
 deployed and continuously run 24/7 on Google Cloud Platform App Engine's free tier.
 
+The app is one of the two repos used to save-retrieve-display data:
+
+* https://github.com/bibekaryal86/health-data-java (save/retrieve data) (this)
+* https://github.com/bibekaryal86/health-data-spa (view data)
+
 To run the app, we need to supply the following environment variables:
 
 * Port
