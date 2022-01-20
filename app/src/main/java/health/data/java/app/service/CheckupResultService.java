@@ -42,9 +42,9 @@ public class CheckupResultService {
             List<CheckupComponent> checkupComponentList = checkupComponentService.findCheckupComponents().getCheckupComponentList();
             List<CheckupResult> checkupResultList = checkupResultDtoList.stream()
                     .map(checkupResultDto -> convertDtoToObject(checkupResultDto, checkupComponentList))
-                    .sorted(Comparator.comparing((CheckupResult cr) -> cr.getCheckupComponent().getCheckupCategory().getCategoryName())
-                            .thenComparing(cr -> cr.getCheckupComponent().getComponentName())
-                            .thenComparing(CheckupResult::getCheckupDate).reversed())
+                    .sorted(Comparator.comparing(CheckupResult::getCheckupDate).reversed()
+                            .thenComparing((CheckupResult cr) -> cr.getCheckupComponent().getCheckupCategory().getCategoryName())
+                            .thenComparing(cr -> cr.getCheckupComponent().getComponentName()))
                     .collect(Collectors.toList());
 
             checkupResultResponse = CheckupResultResponse.builder()
