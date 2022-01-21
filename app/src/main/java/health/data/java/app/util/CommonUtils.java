@@ -46,4 +46,11 @@ public class CommonUtils {
     public static Integer getIntegerId(String id) {
         return isValidNumber(id) ? Integer.parseInt(id) : null;
     }
+
+    public static String findStandardRange(BigDecimal standardLow, BigDecimal standardHigh, String measureUnit) {
+        if (standardLow != null && standardHigh != null && StringUtils.hasText(measureUnit)) {
+            return String.format("%s - %s %s", standardLow, standardHigh, measureUnit);
+        }
+        return "";
+    }
 }
