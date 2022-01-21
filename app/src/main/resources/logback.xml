@@ -2,7 +2,7 @@
 
 <configuration debug="true">
     <property name="LOG_PATTERN"
-              value="[%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ, America/Denver}] [spring-service-skeleton,%X{traceId:-},%X{spanId:-}] [${PID:-},%thread] [%level] [%c{1}] --- %msg%n"/>
+              value="[%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ, America/Denver}] [health-data,%X{traceId:-},%X{spanId:-}] [${PID:-},%thread] [%level] [%c{1}] --- %msg%n"/>
 
     <springProfile name="production,docker,development">
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">

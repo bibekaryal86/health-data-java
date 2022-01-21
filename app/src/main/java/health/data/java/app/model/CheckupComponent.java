@@ -24,4 +24,5 @@ public class CheckupComponent implements Serializable {
     private BigDecimal standardHigh;
     private String measureUnit;
     private String componentComments;
+    private String standardRange;
 }

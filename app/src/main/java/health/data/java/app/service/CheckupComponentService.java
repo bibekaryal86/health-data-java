@@ -136,6 +136,8 @@ public class CheckupComponentService {
                 .standardHigh(checkupComponentDto.getStandardHigh())
                 .measureUnit(checkupComponentDto.getMeasureUnit())
                 .componentComments(checkupComponentDto.getComponentComments())
+                .standardRange(CommonUtils.findStandardRange(checkupComponentDto.getStandardLow(),
+                        checkupComponentDto.getStandardHigh(), checkupComponentDto.getMeasureUnit()))
                 .checkupCategory(checkupCategoryList.stream()
                         .filter(checkupCategory -> checkupCategory.getId().equals(checkupComponentDto.getCategoryId().toString()))
                         .findFirst()
