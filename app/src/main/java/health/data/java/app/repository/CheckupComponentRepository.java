@@ -5,4 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CheckupComponentRepository extends JpaRepository<CheckupComponentDto, Integer> { }
+public interface CheckupComponentRepository extends JpaRepository<CheckupComponentDto, Integer> {}

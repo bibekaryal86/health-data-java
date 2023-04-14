@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CheckupResultRepository extends JpaRepository<CheckupResultDto, Integer> {
-    List<CheckupResultDto> findCheckupResultDtoByUsername(String username);
+  List<CheckupResultDto> findCheckupResultDtoByUsername(String username);
 }

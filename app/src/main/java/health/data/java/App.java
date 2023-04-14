@@ -5,21 +5,22 @@ package health.data.java;
 
 import health.data.java.app.util.CommonUtils;
 import health.data.java.app.util.ConstantUtils;
+import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Collections;
 
 @Slf4j
 @SpringBootApplication
 public class App {
 
-    public static void main(String[] args) {
-        log.info("Begin health-data-java initialization...");
-        SpringApplication app = new SpringApplication(App.class);
-        app.setDefaultProperties(Collections.singletonMap("server.port", CommonUtils.getSystemEnvProperty(ConstantUtils.SERVER_PORT, "8080")));
-        app.run(args);
-        log.info("End health-data-java initialization...");
-    }
+  public static void main(String[] args) {
+    log.info("Begin health-data-java initialization...");
+    SpringApplication app = new SpringApplication(App.class);
+    app.setDefaultProperties(
+        Collections.singletonMap(
+            "server.port", CommonUtils.getSystemEnvProperty(ConstantUtils.SERVER_PORT, "8080")));
+    app.run(args);
+    log.info("End health-data-java initialization...");
+  }
 }
