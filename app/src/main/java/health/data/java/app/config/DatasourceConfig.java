@@ -2,8 +2,8 @@ package health.data.java.app.config;
 
 import health.data.java.app.util.CommonUtils;
 import health.data.java.app.util.ConstantUtils;
+import jakarta.persistence.EntityManagerFactory;
 import java.util.Properties;
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
