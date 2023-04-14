@@ -1,12 +1,11 @@
 package health.data.java.app.model.dto;
 
+import java.io.Serializable;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.io.Serializable;
 
 @Data
 @Builder
@@ -15,10 +14,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "hdt_checkup_category")
 public class CheckupCategoryDto implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @Column(name = "category_name", nullable = false)
-    private String categoryName;
+  @Column(name = "category_name", nullable = false)
+  private String categoryName;
 }

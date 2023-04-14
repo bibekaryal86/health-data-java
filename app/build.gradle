@@ -6,20 +6,18 @@
  * User Manual available at https://docs.gradle.org/7.3.1/userguide/building_java_projects.html
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.6.1')
-    }
-}
-
 plugins {
     id 'application'
     id 'java'
-    id 'io.freefair.lombok' version '6.3.0'
-    id 'org.springframework.boot' version '2.6.1'
+    id 'io.freefair.lombok' version '8.0.1'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'com.diffplug.spotless' version '6.18.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 repositories {
@@ -31,18 +29,18 @@ bootJar {
 }
 
 dependencies {
-    def springVersion = "2.6.1" // also update version in buildscript and plugin
+    def springVersion = "3.0.5"
     implementation "org.springframework.boot:spring-boot-starter-actuator:$springVersion"
     implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
     implementation "org.springframework.boot:spring-boot-starter-security:$springVersion"
     implementation "org.springframework.boot:spring-boot-starter-cache:$springVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springVersion"
-    implementation 'com.ibm.db2:jcc:11.5.7.0'
+    implementation 'com.ibm.db2:jcc:11.5.8.0'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth:3.1.0'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.6'
+    implementation 'io.micrometer:micrometer-tracing-bridge-otel:1.0.4'
 }
 
 application {
@@ -52,4 +50,11 @@ application {
 configurations {
     implementation.exclude module: 'spring-boot-starter-logging'
     implementation.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        googleJavaFormat()
+    }
 }

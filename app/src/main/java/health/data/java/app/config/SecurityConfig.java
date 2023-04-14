@@ -14,33 +14,32 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .csrf()
-                .disable()
-                .httpBasic()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity
+        .authorizeRequests()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .csrf()
+        .disable()
+        .httpBasic()
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  }
 
-    @Override
-    public void configure(WebSecurity webSecurity) {
-        webSecurity
-                .ignoring()
-                .mvcMatchers(HttpMethod.GET, "/tests/ping");
-    }
+  @Override
+  public void configure(WebSecurity webSecurity) {
+    webSecurity.ignoring().mvcMatchers(HttpMethod.GET, "/tests/ping");
+  }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(CommonUtils.getSystemEnvProperty(ConstantUtils.BASIC_AUTH_USR, null))
-                .password("{noop}".concat(CommonUtils.getSystemEnvProperty(ConstantUtils.BASIC_AUTH_PWD, null)))
-                .roles("USER");
-    }
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    auth.inMemoryAuthentication()
+        .withUser(CommonUtils.getSystemEnvProperty(ConstantUtils.BASIC_AUTH_USR, null))
+        .password(
+            "{noop}".concat(CommonUtils.getSystemEnvProperty(ConstantUtils.BASIC_AUTH_PWD, null)))
+        .roles("USER");
+  }
 }
