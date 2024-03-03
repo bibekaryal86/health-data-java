@@ -39,7 +39,7 @@ dependencies {
     implementation 'com.ibm.db2:jcc:11.5.9.0'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
-    implementation 'ch.qos.logback:logback-classic:1.5.1'
+    implementation 'ch.qos.logback:logback-classic:1.5.2'
     implementation 'io.micrometer:micrometer-tracing-bridge-otel:1.2.3'
 }
 
