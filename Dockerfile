@@ -1,16 +1,17 @@
-FROM eclipse-temurin:17-jre-alpine
-RUN adduser --system --group springdocker
+# Build
+FROM gradle:8.10-jdk21-alpine AS build
+WORKDIR /app
+COPY app/build.gradle .
+COPY app/src /app/src
+RUN gradle --no-daemon clean build
+
+# Deploy
+FROM eclipse-temurin:21-jre-alpine
+RUN addgroup -S springdocker
+RUN adduser -S springdocker -G springdocker
 USER springdocker:springdocker
-ARG JAR_FILE=app/build/libs/health-data-java.jar
-COPY ${JAR_FILE} health-data-java.jar
-ENTRYPOINT ["java","-jar", \
-#"-DPORT=6001", \
-#"-DTZ=America/Denver", \
-#"-DDB2USR=some_username", \
-#"-DDB2PWD=some_password", \
-#"-DDB2HST=some_host", \
-#"-DDB2DEP=some_port", \
-#"-DBASIC_AUTH_USR=another_username", \
-#"-DBASIC_AUTH_PWD=another_password", \
-"/health-data-java.jar"]
-# ENV variables provided in docker-compose
+WORKDIR /app
+COPY --from=build /app/build/libs/health-data-java.jar .
+EXPOSE 8080
+ENTRYPOINT ["java","-jar", "health-data-java.jar"]
+# provide environment variables in docker-compose
