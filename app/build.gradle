@@ -31,14 +31,14 @@ bootJar {
 }
 
 dependencies {
-    def springVersion = "3.5.3"
+    def springVersion = "3.5.6"
     implementation "org.springframework.boot:spring-boot-starter-actuator:$springVersion"
     implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
     implementation "org.springframework.boot:spring-boot-starter-security:$springVersion"
     implementation "org.springframework.boot:spring-boot-starter-cache:$springVersion"
 
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springVersion"
-    implementation 'com.ibm.db2:jcc:12.1.0.0'
+    implementation 'com.ibm.db2:jcc:12.1.2.0'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
     implementation 'ch.qos.logback:logback-classic:1.5.18'
